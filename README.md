@@ -4,107 +4,183 @@
 ## 📌 What is BITZ?
 Bitz (BITZ) is a cryptocurrency token that runs on the **Eclipse Network**. It's a Proof of Work (PoW) based token that can be mined with your PC or VPS. By mining Bitz, you can earn this cryptocurrency which can be used for trading or staking.
 
-## 📦 System Requirements
-- **OS**: Ubuntu 22.04 (Laptop or VPS)
-- **Hardware**: Minimum 2GB RAM, Multi-core CPU, Stable internet connection
-- **Storage**: 100GB+ SSD recommended for smooth mining
+# Bitz Node Miner Run Full Guide (PC and VPS and Mac)
 
-## 🔧 Installation Steps
-## Install Dependecies
-**1. Install Packages**
-```bash
-sudo apt-get update && sudo apt-get upgrade -y
+### Offical Docs Guide - still searching..................
 
-sudo apt install screen curl nano  -y
+CA(eclipse) - 64mggk2nXg6vHC1qCdsZdEFzd5QGN4id54Vbho4PswCF
+----
+join telegram Latest Update = 
+https://t.me/cryptosameed
+## 🧰 Prerequisites
+### Before getting started, make sure you have the following:
+	
+ * A Backpack wallet (or another Eclipse-compatible wallet) [Download](https://chromewebstore.google.com/detail/backpack/aflkmfhebedbjioipglgcbcmnbpgliof)
+ * 0.005+ ETH on the Eclipse network
+---
+
+1️⃣ Dependencies for WINDOWS & LINUX & VPS & Mac
+
+For WSL or VPS
 ```
-**2. Install Rust**
-```bash
- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl nano build-essential -y
 ```
-* When Prompted, Enter `1` and wait unti installation compelete.
-```bash
+For Mac
+```
+brew install git curl wget nano tmux htop jq make gcc autoconf automake pkg-config openssl leveldb lz4 coreutils
+```
+
+2️⃣ Install Rust & Node Js & Yarn
+
+For WSL or VPS
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
+rustc --version
 ```
-**3. Install Solana CLI:**
-```bash
+- Just Press Enter to Proceed it
+```
+sudo apt-get update && curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt-get install -y nodejs && node -v && npm -v && sudo npm install -g yarn && yarn -v
+```
+
+For Mac
+```
+brew install curl node yarn rust
+```
+
+3️⃣ Install Solana CLI
+
+For WSL or VPS
+```
 curl --proto '=https' --tlsv1.2 -sSfL https://solana-install.solana.workers.dev | bash
 ```
-* Close and reopen your Terminal.
 ```
-solana version
+source $HOME/.bashrc
 ```
-* If you get `solana: command not found` RUN :
-```bash
-echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
+- Close and Reopen your Terminal > Then Directly Paste Below Command (open again wsl)
 ```
 solana --version
 ```
-
-**4. Switch RPC**
-```bash
-solana config set --url https://eclipse.helius-rpc.com/
+If you get Solana: command not found RUN (WSL for Local PC)
+```
+echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
----
+For Mac
+```
+sh -c "$(curl -sSfL https://solana-install.solana.workers.dev)"
+```
+```
+source $HOME/.bash_profile
+solana --version
+```
 
-## Wallet CLI
-### . Create a CLI wallet
-```bash
+For VPS Only
+- If using VPS, and Solana not found, REBOOT it
+```
+reboot
+```
+
+4️⃣ Configue RPC for Eclipse
+```
+solana config set --url https://mainnetbeta-rpc.eclipse.xyz/
+```
+
+5️⃣ Wallet Setup (Solana Keypair)
+```
 solana-keygen new
 ```
----
+Press ENTER and save the passphrase
 
-## Install Bitz
-```bash
+6️⃣ Exporting Private Key from ID.json
+```
+cat ~/.config/solana/id.json
+```
+* Copy the output (a list of numbers) and import it into Backpack Wallet under “Private Key”.
+* Fund the wallet with 0.005+ ETH on Eclipse to activate mining.
+
+
+
+7️⃣ Install Bitz CLI
+```
 cargo install bitz
 ```
 
----
-
-## Run Bitz Miner
-### 1. Open a screen
-
-```bash
+For VPS Only
+```
+apt install screen -y
+```
+```
 screen -S bitz
 ```
 
-### 2. Start Miner
-```bash
+8️⃣ 🅰️ Start Miner
+```
 bitz collect
 ```
 
-![image](https://github.com/user-attachments/assets/7c526a4b-07da-4ad5-889f-17674761b5e7)
+OR
 
+8️⃣ 🅱️ Start Miner (using multiple core) 
+```
+bitz collect --cores 4
+```
 
-### Usefull Commands
+### How to check your own CPU Cores (Open Command Prompt or PowerShell)
+```
+wmic cpu get NumberOfCores,NumberOfLogicalProcessors
+```
 
-Check account info:
-```bash
+For VPS Only
+- PRESS CTRL+A+D (to run ur miner continuously)
+- To check ur Node Again
+```
+screen -r bitz
+```
+
+### Claim Mined tokens 
+```
+bitz claim
+```
+
+### Check Wallet status 
+```
 bitz account
 ```
 
-To integrate Node & Backpack address
 
-```bash
-cat ~/.config/solana/id.json
+## 🔶For Next Day Run This Command (Windows or Mac)
+
+#1 Open WSL or HomeBrew and Put this Command 
+```
+bitz collect
 ```
 
-Claim Bitz to your Node Wallet:
-```bash
-bitz claim
+## Delete Node File
 ```
-Edit  CPU Utilization, Use Ctrl+C, then replace your 8 with your system cores.
-```bash
-bitz collect --cores 8
+rm -rf ~/.config/solana
 ```
 
-minimize screen:
-  ```bash
-  Ctrl+A+D
-  ```
-ON/OFF: 
-```bash
-screen -r bitz
- ```
+## If You Facing Auto Crashed Error (Core Dumped error)
+
+![Screenshot 2025-04-13 090641](https://github.com/user-attachments/assets/769ece51-a79f-46cc-8613-e20bc0364705)
+
+Put One by One Command & Run it
+```
+RUST_BACKTRACE=1 ./bitz
+```
+```
+solana config get
+```
+```
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+```
+```
+cargo install bitz --force
+```
+- For VPS open ur Screen and Run Start Miner Command
+- For Local PC Directly Run Start Miner Command
+
+
