@@ -5,11 +5,6 @@
 Bitz (BITZ) is a cryptocurrency token that runs on the **Eclipse Network**. It's a Proof of Work (PoW) based token that can be mined with your PC or VPS. By mining Bitz, you can earn this cryptocurrency which can be used for trading or staking.
 
 # Bitz Node Miner Run Full Guide (PC and VPS and Mac)
-
-### Offical Docs Guide - still searching..................
-
-CA(eclipse) - 64mggk2nXg6vHC1qCdsZdEFzd5QGN4id54Vbho4PswCF
-----
 join telegram Latest Update = 
 https://t.me/cryptosameed
 ## 🧰 Prerequisites
